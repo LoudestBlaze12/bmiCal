@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'reuseable_card.dart';
+import 'icon_content.dart';
+
 
 const bottomContainerHeight = 80.0;
 const  Color reusableCardColor = Color(0xFF1D1E33);
-
+const Color inactivateCardColor = Color(0xFF111328);
+const Color activateCardColor = Color(0xFF1D1E33);
 
 class InputPage extends StatefulWidget {
   @override
@@ -12,8 +16,43 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+
+ Color maleCardColour = inactivateCardColor;
+ Color femaleCardColour = inactivateCardColor;
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
+    void updateCard (int gender) {
+      if (gender == 1) {
+
+        if (maleCardColour == inactivateCardColor) {
+          // print("Happy Feet");
+          maleCardColour = activateCardColor;
+          femaleCardColour = inactivateCardColor;
+        } else {
+          maleCardColour = inactivateCardColor;
+          femaleCardColour = activateCardColor;
+        }
+      }
+      if (gender == 2) {
+        if (femaleCardColour == inactivateCardColor) {
+          print("I like to move it");
+
+          femaleCardColour = activateCardColor;
+          maleCardColour = inactivateCardColor;
+        } else {
+          femaleCardColour = inactivateCardColor;
+        }
+      }
+
+
+    }
+
+
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('BMI CALCULATOR')),
@@ -31,40 +70,32 @@ class _InputPageState extends State<InputPage> {
                 Flexible(
                   flex: 1,
                   fit: FlexFit.tight,
-                  child: ReuseableCard(
-                    childCard: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                      IconButton(
-                        // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
-                          icon: FaIcon(FontAwesomeIcons.male),
-                          iconSize: 70.0,
-                          onPressed: () { print("Pressed"); }
-                          ),
-                        Text("Male")
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                      updateCard(1);
+                      });
+                    },
+                    child: ReuseableCard(
+                      childCard: IconWidget(genderName: "MALE",genderIcon: FaIcon(FontAwesomeIcons.male),),
+                      colour: reusableCardColor,
                     ),
-                    colour: reusableCardColor,
                   ),
                 ),
                 //Female Gender Card
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
-                  child: ReuseableCard(
-                    childCard: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
-                            icon: FaIcon(FontAwesomeIcons.female),
-                            iconSize: 70.0,
-                            onPressed: () { print("Pressed"); }
-                        ),
-                        Text("Female")
-                      ],
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        updateCard(2);
+                      });
+                    },
+                    child: ReuseableCard(
+                      childCard: IconWidget(genderIcon: FaIcon(FontAwesomeIcons.female),genderName: "FEMALE",),
+                      colour: reusableCardColor,
                     ),
-                    colour: reusableCardColor,
                   ),
                 ),
 
@@ -121,22 +152,5 @@ class _InputPageState extends State<InputPage> {
 }
 
 
-class ReuseableCard extends StatelessWidget {
 
-  ReuseableCard({@ required this.colour, this.childCard});
 
- final Color colour;
- final Widget childCard;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: childCard,
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: colour,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    );
-  }
-}
