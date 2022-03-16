@@ -270,4 +270,49 @@ class _InputPageState extends State<InputPage> {
 }
 
 
+class DialButton extends StatelessWidget {
 
+
+   DialButton({@required this.labelText,@required this.numberVariable});
+
+   String labelText;
+   int numberVariable;
+
+   @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ReuseableCard(
+      childCard: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(labelText,
+              style: kLabelTextStyle),
+          Text(numberVariable.toString(),
+              style: kNumberTextStyle),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: RoundIconButton(icon: FontAwesomeIcons.minus, buttonPressed: () {
+
+                    print("Here we go");
+                  },)
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
+
+                  print("Here we go");
+                },)
+              ),
+            ],
+          )
+
+        ],
+      ),
+      colour: kReusableCardColor,
+    );
+  }
+
+}
