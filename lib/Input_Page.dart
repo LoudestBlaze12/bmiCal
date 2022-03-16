@@ -6,6 +6,28 @@ import 'icon_content.dart';
 import 'constants.dart';
 
 
+ class RoundIconButton  extends StatelessWidget {
+
+   RoundIconButton({@required this.icon, this.buttonPressed});
+   IconData icon;
+   Function buttonPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: buttonPressed,
+      elevation: 10.0,
+      hoverElevation: 4.0,
+      shape: CircleBorder(),
+      constraints:  BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      fillColor: Color(0xFF4C4F5E),
+      child:Icon(icon),
+    );
+  }
+}
 
 
 enum Gender {
@@ -63,6 +85,7 @@ class _InputPageState extends State<InputPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Male Gender Card & Female Gender Card
           Expanded(
             flex: 1,
             child: Row(
@@ -102,6 +125,8 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
+
+          // Height Card Container
           Expanded(
             child: GestureCard(
               cardColorVar: kReusableCardColor,
@@ -110,7 +135,7 @@ class _InputPageState extends State<InputPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //Height Label
-                  Text("Height",
+                  Text("HEIGHT",
                   style: kLabelTextStyle,),
 
                   //Height Display Row
@@ -159,9 +184,13 @@ class _InputPageState extends State<InputPage> {
               ),
             )
           ),
+
+          //Weight & Age Row
           Expanded(
             child: Row(
               children: [
+
+                //Weight Card
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
@@ -169,11 +198,42 @@ class _InputPageState extends State<InputPage> {
                     childCard: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Text("WEIGHT",
+                            style: kLabelTextStyle),
+                        Text("74",
+                            style: kNumberTextStyle),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
+                                print("Here we go");
+                              },)
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: FloatingActionButton(
+                                  backgroundColor: Color(0xFF4C4F5E),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+
+                                  ),
+                                  onPressed: (){
+
+                                  }),
+                            ),
+                          ],
+                        )
+
                       ],
                     ),
                     colour: kReusableCardColor,
                   ),
                 ),
+
+                //Age Card
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
@@ -202,9 +262,12 @@ class _InputPageState extends State<InputPage> {
         ],
       ),
     );
+
+
+
+
   }
 }
-
 
 
 
