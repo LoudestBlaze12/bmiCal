@@ -44,6 +44,8 @@ class _InputPageState extends State<InputPage> {
 
  Color maleCardColour = kInactivateCardColor;
  Color femaleCardColour = kInactivateCardColor;
+ String kDefaultWeight;
+ int kDefaultAge;
 
  void updateCard (Gender selectedGender) {
    if (selectedGender == Gender.male) {
@@ -194,43 +196,7 @@ class _InputPageState extends State<InputPage> {
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
-                  child: ReuseableCard(
-                    childCard: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("WEIGHT",
-                            style: kLabelTextStyle),
-                        Text("74",
-                            style: kNumberTextStyle),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
-                                print("Here we go");
-                              },)
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: FloatingActionButton(
-                                  backgroundColor: Color(0xFF4C4F5E),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-
-                                  ),
-                                  onPressed: (){
-
-                                  }),
-                            ),
-                          ],
-                        )
-
-                      ],
-                    ),
-                    colour: kReusableCardColor,
-                  ),
+                  child: DialButton(labelText: "WEIGHT", numberVariable: 74),
                 ),
 
                 //Age Card
@@ -296,14 +262,14 @@ class DialButton extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: RoundIconButton(icon: FontAwesomeIcons.minus, buttonPressed: () {
 
-                    print("Here we go");
+                    print("Here we go up");
                   },)
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
 
-                  print("Here we go");
+                  print("Here we go down");
                 },)
               ),
             ],
