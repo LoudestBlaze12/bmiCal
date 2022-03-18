@@ -23,7 +23,7 @@ import 'constants.dart';
         width: 56.0,
         height: 56.0,
       ),
-      fillColor: Color(0xFF4C4F5E),
+      fillColor: Color(0x5E181B26),
       child:Icon(icon),
     );
   }
@@ -44,8 +44,6 @@ class _InputPageState extends State<InputPage> {
 
  Color maleCardColour = kInactivateCardColor;
  Color femaleCardColour = kInactivateCardColor;
- String kDefaultWeight;
- int kDefaultAge;
 
  void updateCard (Gender selectedGender) {
    if (selectedGender == Gender.male) {
@@ -75,6 +73,8 @@ class _InputPageState extends State<InputPage> {
  }
 
   int height = 180;
+ int weight = 74;
+ int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +196,43 @@ class _InputPageState extends State<InputPage> {
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
-                  child: DialButton(labelText: "WEIGHT", numberVariable: 74),
+                  child: ReuseableCard(
+                    childCard: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("WEIGHT",
+                            style: kLabelTextStyle),
+                        Text(weight.toString(),
+                            style: kNumberTextStyle),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: RoundIconButton(icon: FontAwesomeIcons.minus, buttonPressed: () {
+                                setState(() {
+                                  weight--;
+                                });
+
+                                print("Here we go down");
+                              },)
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                                print("Here we go up");
+                              },)
+                            ),
+                          ],
+                        )
+
+                      ],
+                    ),
+                    colour: kReusableCardColor,
+                  ),
                 ),
 
                 //Age Card
@@ -207,6 +243,35 @@ class _InputPageState extends State<InputPage> {
                     childCard: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Text("AGE",
+                            style: kLabelTextStyle),
+                        Text(age.toString(),
+                            style: kNumberTextStyle),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: RoundIconButton(icon: FontAwesomeIcons.minus, buttonPressed: () {
+                                  setState(() {
+                                    age--;
+                                  });
+
+                                  print("Here we go down");
+                                },)
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
+                                  setState(() {
+                                    age++;
+                                  });
+                                  print("Here we go up");
+                                },)
+                            ),
+                          ],
+                        )
+
                       ],
                     ),
                     colour: kReusableCardColor,
@@ -216,14 +281,20 @@ class _InputPageState extends State<InputPage> {
               ],  
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFEB1555),
-              borderRadius: BorderRadius.circular(15),
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, "/results");
+            },
+            child: Container(
+              child: Text("CALCULATE"),
+              decoration: BoxDecoration(
+                color: Color(0xFFEB1555),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              margin: EdgeInsets.only(top: 10.0),
+              width: double.infinity,
+              height: kBottomContainerHeight,
             ),
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
           ),
         ],
       ),
@@ -236,49 +307,4 @@ class _InputPageState extends State<InputPage> {
 }
 
 
-class DialButton extends StatelessWidget {
 
-
-   DialButton({@required this.labelText,@required this.numberVariable});
-
-   String labelText;
-   int numberVariable;
-
-   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return ReuseableCard(
-      childCard: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(labelText,
-              style: kLabelTextStyle),
-          Text(numberVariable.toString(),
-              style: kNumberTextStyle),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: RoundIconButton(icon: FontAwesomeIcons.minus, buttonPressed: () {
-
-                    print("Here we go up");
-                  },)
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: RoundIconButton(icon: FontAwesomeIcons.plus, buttonPressed: () {
-
-                  print("Here we go down");
-                },)
-              ),
-            ],
-          )
-
-        ],
-      ),
-      colour: kReusableCardColor,
-    );
-  }
-
-}
